@@ -1,0 +1,83 @@
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flag Quiz</title>
+ </head>
+
+<!-- Inside my style tags is some simple CSS -->
+ <style>
+   body {
+      background-color: rgb(250, 199, 111);
+   }
+
+   h1 {
+      text-align: center;
+      color: whitesmoke;
+      font-size: 50px;
+     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+   }
+
+   h2 {
+      text-align: center;
+      color: rgba(255, 162, 0, 0.943);
+      font-size: 20px;
+      font-family: 'Courier New', Courier, monospace;
+   }
+
+   p {
+      text-align: center;
+      color:black;
+      font-size: 15px;
+      font-family: 'Courier New', Courier, monospace;
+   }
+
+   /* Image styling to give the image a border, some padding and a slight hover effect*/
+   img {
+  border: 10px solid white; 
+  padding: 10px;  
+   }
+   img:hover {
+      box-shadow: 10px 10px orange ; 
+   }
+
+   /* Rounded pill button styling */
+   .pill {
+      font-size: 20px;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      padding: 10px 20px;
+      border-radius: 20px ;
+      border-color: white;
+      background-color: rgb(249, 179, 67);
+      cursor: pointer;
+      display: block;
+      margin:auto
+   }
+   .pill:hover {
+      background:rgb(248, 167, 17);
+   }
+ </style>
+
+ <!--Below is the main content of my quiz which includes a title and a header which introduces users to my quiz  -->
+ <body>
+    <h1>- Flag Quiz -</h1> 
+    <h2>How well do YOU know your Geography?</h2>
+    <h2>Test your knowledge with this 10 question flag quiz</h2> <br> 
+    
+    <!-- Centering the image plus an image link -->
+    <a target="_blank" href="210flagimg.PNG">
+      <div style="text-align: center;">
+    <img src="210flagimg.PNG" width="500" height="400"> 
+   </div>  
+   </a>
+   <br> 
+   <p>Feeling a bit unprepared? Click the image above for a little help ⇡</p> 
+   <p>Click the button below when your ready to start the quiz ⇣</p>
+  
+   <a style="text-decoration: none;" href="SetUp.html">
+   <button class="pill" type="button">READY!</button>
+   </a>
+ </body>
+
+ </html>

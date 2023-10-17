@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Up Page</title>
+</head>
+
+<style>
+    body {
+        background-color: rgb(250, 199, 111);
+    }
+
+/* pill button styling */
+.pill {
+      font-size: 20px;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      padding: 10px 20px;
+      border-radius: 20px ;
+      border-color: white;
+      background-color: rgb(249, 179, 67);
+      cursor: pointer;
+      display: block;
+      margin:auto
+   }
+.pill:hover {
+      background:rgb(248, 167, 17);
+    }
+
+/* Responce paragraph text styling */
+   p {
+    text-align: center;
+    font-size: 15px;
+    font-family: 'Courier New', Courier, monospace;
+    color: black;
+   }
+
+/* Initially hidden the panel styling */
+   #myPanel {
+    display: none;
+    width: 50%;
+    padding: 10px;
+    background-color: orange;
+    text-align: center;
+    margin: auto;
+   }
+
+/* Panel button styling */
+.block {
+    display: block;
+    width:54%;
+    border:white;
+    background-color:orange;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    text-align: center;
+    margin: auto;
+    font-family:'Courier New', Courier, monospace;
+}
+.block:hover {
+    color: white;
+}
+
+h3 {
+    color: white;
+    font-family:'Courier New', Courier, monospace;
+}
+
+h1 {
+    color: whitesmoke;
+    text-align: center;
+    text-decoration: dotted;
+    font-family:'Times New Roman', Times, serif;
+}
+
+/* divider styling */
+hr.rounded {
+   top: 20px;
+   border-radius: 5px;
+   border: orange;
+   height: 20px;
+   margin-bottom: 50;
+   background: white;
+}
+</style>
+
+<body>
+    <br><br>
+    <button onclick="myFunction()" class="pill" type="button">CLICK ME!</button>
+    <p id="demo"></p> <br>
+
+    <hr class="rounded"> <br>
+    <button class="block" id="toggleButton">RULES</button>
+    <div id="myPanel">
+        <h3>Please follow these following rules:</h3>
+        <p>1. Answer each question before hitting submit.</p>
+        <p>2. Select an answer before the timer runs out.</p>
+        <p>3. Just try your best and have fun! (˶ᵔ ᵕ ᵔ˶)</p> 
+    </div><br>
+   <hr class="rounded">
+
+   <h1>- Reminder -</h1>
+   <p>This quiz is TIMED !!</p>
+   <p>You have 60 seconds to select an answer for each question. When your ready click start.</p>
+  
+   <a style="text-decoration: none;" href="MainQuiz.html">
+    <button class="pill" type="button">START!</button>
+    </a>
+
+<!-- Below are my script tags, inside them will be my Java Script code -->
+<script>
+    function myFunction() {  //window prompt to collect user input (user's name) and output a message 
+            
+            let text;
+            //displays a prompt window to collect user input (input is user's name)
+            let person = prompt("Welcome to the flag quiz\nPlease enter your name below ⇣"); 
+           
+            //if a user has cancelled the pop-up prompt or has not entered any input (invalid scenario), a message will be displayed to encourage them to enter in their name.
+            if (person == null|| person == "") {
+                text = "(ง•̀o•́)ง : Hey! Enter your name to continue!";
+
+            //if the user enters in a name (valid scenario), a friendly message will welcome them. 
+            } else {
+                text = "⸜( ˶ˆᗜˆ˵ )⸝: Hello" + " " + person + " thank you for choosing to play! Please click the panel below to read the rules before you start."
+            }
+            //the content of this element is set with the "demo" id
+            document.getElementById("demo").innerHTML= text;
+        }
+
+    //refrence link to the hide and show panel and the button with thier respective IDs
+    const toggleButton = document.getElementById('toggleButton'); 
+    const myPanel = document.getElementById('myPanel'); 
+
+        toggleButton.addEventListener('click', function () {
+            
+            //checks whether the display style of myPanel is empty 
+            if (myPanel.style.display === 'none' || myPanel.style.display === '') {
+                
+                //when myPanel is hidden this displays and makes it visible
+                myPanel.style.display = 'block';
+            } else {
+               
+                //if the panel is currentyly visible, hide it by setting it to 'none'
+                myPanel.style.display = 'none';
+            }
+        })
+</script>
+
+</body>
+
+</html>

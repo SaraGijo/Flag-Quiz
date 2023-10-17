@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Page</title>
+</head>
+
+<style>
+    body {
+        background-color: rgb(250, 199, 111);
+    }
+    h1 {
+        text-align: center;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        color: whitesmoke;
+        font-size: 50px;
+    }
+
+.quiz-container {
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 16px;
+}
+/* styling for quiz timer */
+.quiz-container .timer {
+    font-weight: bold;
+    text-align: right;
+}
+.timer.warning { /* to warn users time is running out */
+    color: red;
+}
+/* styling for question*/
+.quiz-container h2.question {
+    font-size: 20px;
+    background-color: white;
+    padding: 16px;
+    border-radius: 5px;
+    font-weight: normal;
+    line-height: 1.6;
+}
+/* styling for options */
+.quiz-container .options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 10px;
+}
+/* option button styling */
+.quiz-container .option {
+    border: none;
+    padding: 20px 30px;
+    font-size: 18px;
+    background-color:rgb(255, 171, 16);
+    border-radius: 5px;
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+}
+.quiz-container button {
+    cursor: pointer;
+}
+/* styling for disabled elements such as muliselect */
+.disabled {
+    pointer-events: none;
+}
+
+.option.correct { /* styling to show when an aswer is correct */
+  background-color:rgb(133, 244, 60) ;
+  color: white;
+}
+.option.incorrect { /* styling to show when an aswer is incorrect */
+  background-color:rgb(209, 52, 52);
+  color: white;
+}
+
+/* styling for next btn and retake btn */
+.quiz-container .next-btn,
+.quiz-result .retake-btn {
+    font-size: 20px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding: 10px 20px;
+    border-radius: 20px ;
+    border-color: white;
+    background-color: rgb(249, 179, 67);
+    font-weight: bold;
+    cursor: pointer;
+    display:block;
+    margin:auto;
+}
+
+/* quiz result box styling */
+.quiz-result {
+    display: none;
+    flex-direction: column;
+    gap:20px;
+    max-width: 900px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+    padding: 15px;
+}
+/* quiz result container styling */
+.quiz-result .question-container {
+    padding: 12px;
+    border: 5px solid white ;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 10px;
+}
+/* (incorrect) quiz container styling */
+.quiz-result .question-container.incorrect {
+    background-color:rgb(209, 52, 52);
+    color: white;
+}
+.quiz-result .question-container.correct {
+    background-color: rgb(168, 238, 63);
+}
+
+/* Quiz progess bar styling */
+.question-number {
+    font-size: 15px;
+    margin-left: 15px;
+    background: rgb(42, 39, 37);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* flag image styling */
+#question-image {
+    width: 220px;
+    height: 150px;
+    border:5px solid rgb(30, 27, 27);
+}
+</style>
+
+<body>
+ 
+<div class="quiz-container">
+    <h1>- FLAG QUIZ -</h1>
+    <div class="timer">Time left: 60 seconds</div> <!--timer display -->
+    <h2 class="question"></h2>
+    <div class="options"> <!--options-->    
+</div>
+    <br>
+    <button class="next-btn">NEXT!</button>  
+</div>
+
+<div class="quiz-result"> <!--result-->
+
+<div class="question-container incorrect">
+<div class="question">Which flag is this?</div> <!--question-->
+<div class="user-answer">Your answer:Not answered</div> <!--users answer-->
+<div class="correct-answer">Correct answer: correct answer</div> <!--correct answer-->
+</div>
+
+<div class="question-container correct">
+<div class="question">Which flag is this?</div><!--question-->
+<div class="user-answer">Your answer:Not answered</div> <!--users answer-->
+<div class="correct-answer">Correct answer: correct answer</div><!--correct answer-->
+</div>
+
+
+    <div class="quiz-container">
+        <!--retake button-->
+        <button class="retake-btn">Retake Quiz</button>
+    </div>
+
+
+    <!-- Below is my Java Script code -->
+    <script>
+        // Defines the quiz questions and answers array (variable which stores mutiple values)
+        let quizData = [
+            {
+                question: "  Which flag is this ?<br><br><img src='Flag_of_Brazil.PNG' alt='Brazil Flag' id='question-image'>", //question + flag image
+                options: ["Argentina","Mexico","Brazil","Cuba"], //options
+                correct:"Brazil", //correct answer
+            },
+            {
+                question: "  Which flag is this ?<br><br><img src='Flag_of_Kyrgyzstan.PNG' alt='Kyrgyzstan Flag' id='question-image'>", //question + flag image
+                options: ["Kyrgyzstan","Lebanon","Nicaragua","Portgual"],
+                correct:"Kyrgyzstan",
+            },
+            {
+                question: "  Which flag is this ?<br><br><img src='Flag_of_Gambia.PNG' alt='Gambia Flag' id='question-image'>", //question + flag image
+                options: ["Bolivia","Gambia","Montenegro","Austria"], //options
+                correct:"Gambia", //correct answer
+            },
+            {
+                question: "  Which flag is this ?<br><br><img src='Flag_of_Australia.PNG' alt='Australia Flag' id='question-image'>", //question + flag image
+                options: ["Australia","New Zeland","United Kingdom","USA"], //options
+                correct:"Australia", //correct answer
+            },
+            {
+                question: "  Which flag is this ?<br><br><img src='Flag_of_Cyprus.PNG' alt='Cyprus Flag' id='question-image'>", //question + flag image
+                options: ["Tuvalu","Kenya","Uganda","Cyprus"], //options
+                correct:"Cyprus", //correct answer
+            },
+            {
+                question: "  Which flag is this ?<br><br><img src='Flag_of_Pakistan.PNG' alt='Pakistan Flag' id='question-image'>", //question + flag image
+                options: [" India","Syria","Pakistan","Qatar"], //options
+                correct:"Pakistan", //correct answer
+            },
+            {
+                question: "  Which flag is this ?<br><br><img src='Flag_of_Indonesia.PNG' alt='Indonesisa Flag' id='question-image'>", //question + flag image
+                options: ["Indonesia","Poland","Singapore","Monaco"], //options
+                correct:"Indonesia", //correct answer
+            },
+            {
+                question: "  Which flag is this ?<br><br><img src='Flag_of_Chad.PNG' alt='Chad Flag' id='question-image'>", //question + flag image
+                options: ["Italy","Mali","Andorra","Chad"], //options
+                correct:"Chad", //correct answer
+            },
+            {
+                question: "  Which flag is this ?<br><br><img src='Flag_of_Norway.PNG' alt='Norway Flag' id='question-image'>", //question + flag image
+                options: ["Finland","Switzerland","Norway","Sweden"], //options
+                correct:"Norway", //correct answer
+            },
+            {
+                question: "  Which flag is this ?<br><br><img src='Flag_of_Maldives.PNG' alt='Maldives Flag' id='question-image'>", //question + flag image
+                options: ["Maldives","Saudi Arabia","Sri Lanka","Bali"], //options
+                correct:"Maldives", //correct answer
+            },
+            {
+                question: "  Which flag is this ?<br><br><img src='Flag_of_Luxembourg.PNG' alt='Luxembourg Flag' id='question-image'>", //question + flag image
+                options: ["France","Romania","Luxembourg","Netherland"], //options
+                correct:"Luxembourg", //correct answer
+            },
+        ];
+       
+        // function to display a quiz question with an image
+        function displayQuestion(questionData) {
+            const quizContainer = document.getElementById("quiz-container");
+            const questionElement = document.createElement("div");
+
+            questionElement.innerHTML = questionData.question;
+
+            quizContainer.appendChild(questionElement);
+        }
+     
+        const quizContainer = document.querySelector(".quiz-container");
+        const question = document.querySelector(".quiz-container .question");
+        const options = document.querySelector(".quiz-container .options");
+        const nextBtn = document.querySelector(".quiz-container .next-btn");
+        const quizResult = document.querySelector(".quiz-result");
+
+       
+        //initializing the question number and defining the maxium number of question (0-9)
+            
+            let questionNumber = 0; //current question index
+            const MAX_QUESTIONS = 10; //total number questions in my quiz
+            let score = 0; // users score
+            let timerInterval; //interval for the timer
+
+            //function which shuffles an array  
+            const shuffleArray = array => {
+                return array.slice().sort(() => Math.random() -0.5);
+            };
+
+            //to shuffle and randomise the options in the quiz
+            quizData = shuffleArray(quizData);
+
+            //function which resets the data stored in the local storage 
+            const resetLocalStorage = () => {
+                for (i = 0; i < MAX_QUESTIONS; i++) {
+                localStorage.removeItem(`userAnswer_${i}`)
+            }
+        };
+        resetLocalStorage();
+
+            //function which checks whether the users selected answer is correct or not
+            const checkAnswer = (e) =>{
+                let userAnswer = e.target.textContent;
+                if (userAnswer === quizData[questionNumber].correct) {
+                    score++;
+                    e.target.classList.add("correct");
+                } else {
+                    e.target.classList.add("incorrect");
+                }
+
+                localStorage.setItem(`userAnswer_${questionNumber}`, userAnswer);
+
+                let allOptions = document.querySelectorAll(".quiz-container .option");
+                allOptions.forEach((o) => {
+                    o.classList.add("disabled");
+                });
+            };
+
+            //function which creates questions and selectable options
+        const createQuestion = () => {
+           
+            //timer function
+            clearInterval(timerInterval);
+            let secondsLeft = 59;
+            const timerDisplay = document.querySelector(".quiz-container .timer");
+            timerDisplay.classList.remove("warning");
+        
+            timerInterval = setInterval(() => {
+                timerDisplay.textContent = `Time left: ${secondsLeft} seconds`;
+                secondsLeft--;
+
+                //when the timer reaches 10 seconds the timer turns red as a warning
+                if(secondsLeft < 10) {
+                    timerDisplay.classList.add("warning");
+                }
+
+                //when the timer gets to 0 seconds time ran out and the next question will be displayed
+                if(secondsLeft < 0){
+                    clearInterval(timerInterval);
+                    displayNextQUestion();
+                }
+            }, 1000);
+
+            // clear the existing options and questions
+            options.innerHTML ="";
+            question.innerHTML = `<span class='question-number'>${ 
+                questionNumber + 1
+            }/${MAX_QUESTIONS}</span>${quizData[questionNumber].question}`;
+
+            //constantly shuffle the options for each question
+        const shuffledOptions = shuffleArray(quizData[questionNumber].options);
+            //create and display option button
+            shuffledOptions.forEach((o) => {
+                const option = document.createElement("button");
+                option.classList.add("option");
+                option.innerHTML = o;
+                option.addEventListener("click", (e) => {
+                    checkAnswer(e);
+                });
+                options.appendChild(option);
+            });
+        };
+
+        //function so users can retake the quiz
+        const retakeQuiz = () => {
+            questionNumber = 0;
+            quizData = shuffleArray(quizData);
+            resetLocalStorage();
+           
+            createQuestion();
+            quizResult.style.display = "none"
+            quizContainer.style.display = "block"
+        };
+       
+        //function to display quiz results
+        const displayQuizResult = () => {
+            quizResult.style.display = "flex";
+            quizContainer.style.display = "none";
+            quizResult.innerHTML = "";
+           
+            const resultHeading = document.createElement("h1");
+            resultHeading.innerHTML = `You have scored ${score} points!`;
+
+            if (score >= 5){
+                alert ("Woah! I am impressed!");
+            } else {
+                alert("Did you pay attention in Geography...?");
+            }
+            
+            quizResult.appendChild(resultHeading);
+
+            for (let i = 0; i <MAX_QUESTIONS; i++) {
+                const resultItem = document.createElement("div");
+                resultItem.classList.add("question-container");
+
+                const userAnswer = localStorage.getItem(`userAnswer_${i}`);
+                const correctAnswer = quizData[i].correct;
+
+                let answeredCorrectly = userAnswer === correctAnswer;
+
+                if (!answeredCorrectly) {
+                    resultItem.classList.add("incorrect");
+                } else {
+                    resultItem.classList.add("correct");
+                }
+       
+                resultItem.innerHTML = `<div class="question">Question ${i + 1}: ${
+                    quizData[i].question
+                }</div>
+                <div class="user-answer">You answer: ${userAnswer || "Not Answered"}</div>
+                <div class="correct-answer">Correct answer:${correctAnswer}</div>`;
+                    quizResult.appendChild(resultItem);
+            }
+
+            //retake button function
+            const retakeBtn = document.createElement("button");
+            retakeBtn.classList.add("retake-btn");
+            retakeBtn.innerHTML = "Retake Quiz";
+            retakeBtn.addEventListener("click", retakeQuiz);
+            quizResult.appendChild(retakeBtn);
+            };
+
+        createQuestion();
+
+        //function to  display the next question
+        const displayNextQUestion = () => {
+            if (questionNumber >=MAX_QUESTIONS - 1) {
+                displayQuizResult();
+                return;
+            }
+
+            questionNumber++;
+            createQuestion();
+        }
+        // add a click event listener to the "Next" button to trigger the next question
+        nextBtn.addEventListener("click",displayNextQUestion)
+
+    </script>
+
+
+</body>
+
+</html>
